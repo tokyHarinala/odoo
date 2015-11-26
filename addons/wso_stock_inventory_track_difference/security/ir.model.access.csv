@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wso_stock_inventory_track_difference,wso.stock.inventory.track.difference,model_wso_stock_inventory_track_difference,base.group_user,1,1,1,1
+access_wso_stock_inventory_track_difference_lines,wso.stock.inventory.track.difference.lines,model_wso_stock_inventory_track_difference_lines,base.group_user,1,1,1,1

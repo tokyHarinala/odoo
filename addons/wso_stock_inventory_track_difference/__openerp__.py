@@ -22,7 +22,7 @@
     'description': """
 Warehouse management and stock inventory
 ==============================================================
- Tableaux de bord de suivi des écarts d'inventaire par mois
+ Tableaux de bord de suivi des écarts d'inventaire par mois par emplacement.
 
     """,
     'category': 'Warehouse Management',
@@ -32,6 +32,7 @@ Warehouse management and stock inventory
     'init_xml': [],
     'data': [
         'stock_difference.xml',
+        'security/ir.model.access.csv'
         ],
     'demo_xml': [],
     'installable': True,

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_inventory_location_temp,stock.inventory.location.temp,model_stock_inventory_location_temp,base.group_user,1,1,1,1
+access_stock_inventory_location_lines_temp,stock.inventory.location.lines.temp,model_stock_inventory_location_lines_temp,base.group_user,1,1,1,1

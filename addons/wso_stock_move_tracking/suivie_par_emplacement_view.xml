@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		 <record id="wso_stock_move_tracking_location_temp_tree_view" model="ir.ui.view">
+			<field name="name">stock.inventory.location.temp.tree</field>
+			<field name="model">stock.inventory.location.temp</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Suivi de Stock">
+					<field name="emplacement_id" />
+					<field name="from_date" widget="date"/>
+					<field name="to_date"  widget="date"/>
+				</tree>
+			</field>
+		 </record>
+
+		 <record id="wso_stock_move_tracking_location_lines_temp_tree_view" model="ir.ui.view">
+			<field name="name">stock.inventory.location.lines.temp.tree</field>
+			<field name="model">stock.inventory.location.lines.temp</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Suivi de Stock" editable="bottom" create="false" delete="false">
+					<field name="product_id"/>
+					<field name="beginning_qty"/>
+					<field name="total_input"/>
+					<field name="total_output"/>
+					<field name="final_qty"/>
+				</tree>
+			</field>
+		 </record>
+
+		 <record id="wso_stock_move_tracking_location_form_view" model="ir.ui.view">
+			<field name="name">stock.inventory.location.temp.form</field>
+			<field name="model">stock.inventory.location.temp</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Suivi de Stock par emplacement">
+                    <group colspan="4">
+                    	<div class="oe_title">
+		                    <label for="emplacement_id" string="Emplacement" class="oe_edit_only"/>
+		            	 	 <h3>
+			                 	<field name="emplacement_id"/>
+			                 </h3>
+            		 	</div>
+				        <newline/>
+			            <group colspan="2">
+			                <field name="from_date" class="oe_inline" widget="date"/>
+			                <field name="to_date" class="oe_inline" widget="date"/>
+		                </group>
+		                <group colspan="2">
+			                <field name="inventory_base_id" class="oe_inline" readonly="1"/>
+		                </group>
+		            </group>
+	                <newline/>
+	                <group>
+	                	<notebook>
+							<page string = "Inventaire des Articles">
+
+									<group colspan="4">
+										<button name="make_inventory_temp3"
+					                                string="Calculer" type="object"
+					                                icon="terp-stock_format-scientific"
+					                                />
+				                    </group>
+
+				                    <field name="child_ids" nolabel="1"
+				                    	context="{'tree_view_ref' : 'wso_stock_move_tracking.wso_stock_move_tracking_location_lines_temp_tree_view', 'group_by':'product_id'}"
+				                    	mode="tree" widget="one2many"
+				                    	delete="false" create="false"/>
+
+
+							</page>
+						</notebook>
+						<newline/>
+	                </group>
+                </form>
+			</field>
+		</record>
+
+		<record id="wso_stock_move_tracking_location_temp_action_form" model="ir.actions.act_window">
+			<field name="name">Suivi par emplacement</field>
+            <field name="res_model">stock.inventory.location.temp</field>
+            <field name="view_type">form</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="wso_stock_move_tracking.wso_stock_move_tracking_location_temp_tree_view"/>
+		</record>
+
+
+
+		<menuitem id="menu_stock_inventory_location_control" name="Suivi Stock" parent="stock.menu_stock_root" sequence="5"/>
+
+		<menuitem  name="Suivi par emplacement" id="menu_wso_stock_move_tracking_temp_tree_view" action="wso_stock_move_tracking_location_temp_action_form"
+            parent="menu_stock_inventory_location_control" sequence="0"/>
+
+	</data>
+
+</openerp>

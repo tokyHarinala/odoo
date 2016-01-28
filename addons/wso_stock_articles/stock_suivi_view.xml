@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="view_picking_form_extend" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+		        <xpath expr="//field[@name='min_date']"  position="after">
+		        	<field  name="picking_in_number" attrs="{'invisible': [('picking_type_id.code','!=','incoming')]}" />
+		        </xpath>
+            </field>
+        </record>
+
+
+		<record id="wso_stock_suivi_tree_view" model="ir.ui.view">
+			<field name="name">stock.move.suivi.tree</field>
+			<field name="model">stock.move.suivi</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Suivi de Stock">
+					<field name="emplacement_id" />
+					<field name="product_id" />
+					<field name="from_date" widget="date"/>
+					<field name="to_date"  widget="date"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		 </record>
+
+		<record id="wso_stock_move_lines_tree_view" model="ir.ui.view">
+			<field name="name">stock.move.tree</field>
+			<field name="model">stock.move</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Mouvement de Stock" editable="bottom" readonly="1">
+					<!-- <field name="name"/> -->
+					<field name="picking_id"/>
+					<field name="origin"/>
+					<field name="picking_in_number"/>
+					<field name="product_id"/>
+					<field name="product_qty"/>
+					<field name="location_id"/>
+					<field name="location_dest_id"/>
+					<field name="date"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		 </record>
+
+		 <record id="wso_stock_suivi_form_view" model="ir.ui.view">
+			<field name="name">stock.move.suivi.form</field>
+			<field name="model">stock.move.suivi</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Suivi de Stock par Article">
+                    <group colspan="4">
+                    	<div class="oe_title">
+		                    <label for="emplacement_id" string="Emplacement" class="oe_edit_only"/>
+		            	 	 <h3>
+			                 	<field name="emplacement_id"/>
+			                 </h3>
+            		 	</div>
+            		 </group>
+            		 <newline/>
+            		 <group colspan="4">
+            		 	<field name="all_product" class="oe_inline"/>
+            		 	<field name="product_id" class="oe_inline" attrs="{'invisible':[('all_product','=',True)]}"/>
+				        <group colspan="2">
+			                <field name="type_suivi" class="oe_inline"/>
+			                <field name="state" class="oe_inline"/>
+		                </group>
+			            <group colspan="2">
+			                <field name="from_date" class="oe_inline" widget="date"/>
+			                <field name="to_date" class="oe_inline" widget="date"/>
+		                </group>
+		            </group>
+
+	                <newline/>
+	                <group>
+	                	<notebook>
+							<page string = "Mouvement de stock">
+									<group colspan="4">
+										<button name="compute_move"
+					                                string="Calculer" type="object"
+					                                icon="terp-stock_format-scientific"
+					                                />
+				                    </group>
+
+				                    <field name="move_ids" nolabel="1"
+				                    	context="{'tree_view_ref' : 'wso_stock_articles.wso_stock_move_lines_tree_view', 'group_by':'product_id'}"
+				                    	mode="tree" widget="one2many"
+				                    	delete="false" create="false"/>
+
+
+							</page>
+						</notebook>
+						<newline/>
+	                </group>
+                </form>
+			</field>
+		</record>
+
+		<record id="wso_stock_suivi_action_form" model="ir.actions.act_window">
+			<field name="name">Suivi par Article</field>
+            <field name="res_model">stock.move.suivi</field>
+            <field name="view_type">form</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="wso_stock_articles.wso_stock_suivi_tree_view"/>
+		</record>
+
+
+
+		<menuitem  name="Suivi par article" id="menu_wso_stock_suivi_tree_view" action="wso_stock_suivi_action_form"
+            parent="wso_stock_move_tracking.menu_stock_inventory_location_control" sequence="1"/>
+
+	</data>
+
+</openerp>
